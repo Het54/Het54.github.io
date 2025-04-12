@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import NameAnimation from './NameIntroAnimation';
 import MainContent from './MainComponent';
+import Home from './pages/Home';
+import Experience from './pages/Experience';
+import Projects from './pages/Projects';
+import Resume from './pages/Resume';
+import Contact from './pages/Contact';
 
-const HomePage: React.FC = () => {
+const Main: React.FC = () => {
   const [showIntro, setShowIntro] = useState(true);
   const [showContent, setShowContent] = useState(false);
   
@@ -36,11 +42,21 @@ const HomePage: React.FC = () => {
 
       <AnimatePresence>
         {showContent && (
-          <MainContent />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<MainContent />}>
+                <Route index element={<Home />} />
+                <Route path="experience" element={<Experience />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="resume" element={<Resume />} />
+                <Route path="contact" element={<Contact />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
         )}
       </AnimatePresence>
     </div>
   );
 };
 
-export default HomePage;
+export default Main;
